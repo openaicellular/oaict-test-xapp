@@ -56,7 +56,7 @@ HEADER = 64
 SC_PORT = 8585
 SERVER = socket.gethostbyname(socket.gethostname())
 print('SERVER=',SERVER)
-print('socket.gethostname()=',socket.gethostname())
+#print('socket.gethostname()=',socket.gethostname())
 ADDR = (SERVER, SC_PORT)
 print('ADDR=', ADDR)
 FORMAT = 'UTF-8'
@@ -133,13 +133,17 @@ def connectdb():
     #global db
     global RAN_data
     
+    print('SC_PORT =', SC_PORT)
+    print('SERVER=',SERVER)
+    print('ADDR=', ADDR)
+    
     db2 = DATABASE('kpimon')
     print('db2 =  DATABASE(kpimon)=', db2) 
     #db2.read_data("ricIndication_UeMetrics")
     db2.read_data("ricIndication_UeMetrics")
     print('////came back from db2.DATABASE2-read-data to connectdb.else///////')
     #print('db2.read_data("ueMetrics")=', db2.read_data("ueMetrics"))
-    ue_data_kpimon = db2.data.values.tolist()  # needs to be updated in future when live feed will be coming through KPIMON to influxDB
+    ue_data_kpimon = db2.data.values.tolist()
     print('ue_data_kpimon = db2.data.values.tolist()=', ue_data_kpimon)
     
     db3 = DATABASE('kpimon')
@@ -147,7 +151,7 @@ def connectdb():
     db3.read_data("ricIndication_cellMetrics")
     print('////came back from db3.DATABASE2-read-data to connectdb.else///////')
     #print('db3.read_data("cellMetrics")=', db3.read_data("cellMetrics"))
-    cell_data_kpimon = db3.data.values.tolist()  # needs to be updated in future when live feed will be coming through KPIMON to influxDB
+    cell_data_kpimon = db3.data.values.tolist() 
     print('cell_data_kpimon = db3.data.values.tolist()=', cell_data_kpimon)
     
     message_sent = {"type": "KPI xApp", "UE Metrics": ue_data_kpimon, "Cell Metrics": cell_data_kpimon}
